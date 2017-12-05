@@ -1,5 +1,6 @@
-# phpfmt_7-1_nullable-types
+# phpfmt_7-1
 Fix the phpfmt nullable types space issue with php 7.1 and above : https://github.com/nanch/phpfmt_stable/issues/36
+
 Fix the phpfmt space after "yield from" issue with php 7.1 and above : https://github.com/nanch/phpfmt_stable/issues/37
 Fix the ClassToStatic pass issue : https://github.com/nanch/phpfmt_stable/issues/31
 
