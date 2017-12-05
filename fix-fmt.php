@@ -22,10 +22,24 @@ if (array_search($toAdd[1], $lines) === false) {
     }
 }
 
-// FIX PHP7.1 nullable types : https://github.com/nanch/phpfmt_stable/issues/36
-$nullableLine = array_search("\t\t\t\t\t\$this->appendCode(' ' . \$text . \$this->getSpace(!\$this->rightTokenIs(ST_COLON)));", $lines);
-if ($nullableLine !== false) {
-    $lines[$nullableLine] = "\t\t\t\t\t\$this->appendCode(' ' . \$text . \$this->getSpace(!\$this->rightTokenIs(ST_COLON) && (\$id !== ST_QUESTION || !\$this->rightTokenIs(T_STRING))));";
+$patchs = [
+    // FIX PHP7.1 nullable types : https://github.com/nanch/phpfmt_stable/issues/36
+    [
+        "\t\t\t\t\t\$this->appendCode(' ' . \$text . \$this->getSpace(!\$this->rightTokenIs(ST_COLON)));",
+        "\t\t\t\t\t\$this->appendCode(' ' . \$text . \$this->getSpace(!\$this->rightTokenIs(ST_COLON) && (\$id !== ST_QUESTION || !\$this->rightTokenIs(T_STRING))));",
+    ],
+    // FIX pass ClassToStatic : https://github.com/nanch/phpfmt_stable/issues/31
+    [
+        "\t\t\t\t\$this->tkns[\$i] = [T_STRING, self::PLACEHOLDER];",
+        "\t\t\t\t\$this->tkns[\$i] = [T_STRING, static::PLACEHOLDER];",
+    ],
+];
+
+foreach ($patchs as list($search, $replacement)) {
+    $lineNumber = array_search($search, $lines);
+    if ($lineNumber) {
+        $lines[$lineNumber] = $replacement;
+    }
 }
 
 file_put_contents(
