@@ -1,7 +1,7 @@
 <?php
 
 // replace this line if necessary
-$pharPath = "~/.config/sublime-text-3/Packages/phpfmt/fmt.phar";
+$pharPath = "/home/mkcg/.config/sublime-text-3/Packages/phpfmt/fmt.phar";
 $tmpDir = __DIR__;
 
 (new Phar($pharPath))->extractTo($tmpDir);
