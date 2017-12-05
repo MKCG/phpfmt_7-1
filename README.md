@@ -1,2 +1,14 @@
 # phpfmt_7-1_nullable-types
 Fix the phpfmt nullable types space issue with php 7.1 and above : https://github.com/nanch/phpfmt_stable/issues/36
+
+First install https://github.com/nanch/phpfmt_stable then replace the fmt.phar
+
+You can either use the one provided here (not recommended) or use the fix-fmt.php script to automatically fix your current fmt.phar file.
+
+## With the provided script
+The provided script takes no argument but contains the path of the file to fix so I would recommend you to replace the fourth line if necessary.
+
+Also the PHP configuration "phar.readonly" must be disable for the fix-fmt.php script to fix the phar content.
+
+Example :
+`php -d "phar.readonly=0" fix-fmt.php`
