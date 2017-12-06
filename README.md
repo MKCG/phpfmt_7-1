@@ -6,7 +6,7 @@ Fix the phpfmt space after "yield from" issue with php 7.1 and above : https://g
 
 Fix the ClassToStatic pass issue : https://github.com/nanch/phpfmt_stable/issues/31
 
-Fix modifier issue when PHP keyword is used as method name : https://github.com/nanch/phpfmt_stable/issues/19
+Fix modifier issue when PHP keyword is used as method name : https://github.com/nanch/phpfmt_stable/issues/18 / https://github.com/nanch/phpfmt_stable/issues/19
 
 Fix : PHP keyword used as function names must not be lowercased since PHP7
 

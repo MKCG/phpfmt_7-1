@@ -54,7 +54,9 @@ $pathTokenParse = [
         "\tpublic function format(\$source) {",
         "\t\t\$this->tkns = token_get_all(\$source, TOKEN_PARSE);"
     ],
-    // Fix : visibility modifier is preserved when method names is a PHP keyword : https://github.com/nanch/phpfmt_stable/issues/19
+    // Fix : visibility modifier is preserved when method names is a PHP keyword :
+    // - https://github.com/nanch/phpfmt_stable/issues/18
+    // - https://github.com/nanch/phpfmt_stable/issues/19
     [
         "final class PSR2ModifierVisibilityStaticOrder extends FormatterPass {",
         "\tpublic function format(\$source) {",
