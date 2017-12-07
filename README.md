@@ -10,6 +10,8 @@ Fix modifier issue when PHP keyword is used as method name : https://github.com/
 
 Fix : PHP keyword used as function names must not be lowercased since PHP7
 
+Fix replace is_null when preceded by an exclamation to negate it : https://github.com/nanch/phpfmt_stable/issues/11
+
 
 
 Install https://github.com/nanch/phpfmt_stable then replace the fmt.phar

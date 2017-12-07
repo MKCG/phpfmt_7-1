@@ -75,6 +75,64 @@ foreach ($pathTokenParse as list($search, $methodStart, $replacement)) {
     }
 }
 
+// Fix replace is_null when preceded by an exclamation to negate it : https://github.com/nanch/phpfmt_stable/issues/11
+$inject = [
+    [
+        'insert_after',
+        "\t\t\$this->useCache = true;",
+        [
+            "\t\t\$isEqual = true;"
+        ]
+    ],
+    [
+        'insert_after',
+        "\t\t\t\$this->cache = [];",
+        [
+            "",
+            "\t\t\tif (\$id == ST_EXCLAMATION) {",
+            "\t\t\t\tlist(\$nextToken, \$nextText) = \$this->rightUsefulToken();",
+            "\t\t\t\tif (\$nextToken === T_STRING && strtolower(\$nextText) === 'is_null') {",
+            "\t\t\t\t\t\$isEqual = false;",
+            "\t\t\t\t\tcontinue;",
+            "\t\t\t\t}",
+            "\t\t\t}",
+            "",
+        ]
+    ],
+    [
+        'replace',
+        "\t\t\t\t\$this->appendCode('===');",
+        "\t\t\t\t\$this->appendCode(\$isEqual ? '===' : '!==');"
+    ],
+    [
+        'insert_after',
+        "\t\t\t\t\$this->printAndStopAt(ST_PARENTHESES_CLOSE);",
+        [
+            "\t\t\t\t\$isEqual = true;"
+        ]
+    ]
+];
+
+
+$isNullBegin = array_search("final class ReplaceIsNull extends AdditionalPass {", $lines);
+
+if ($isNullBegin) {
+    $i = $isNullBegin;
+    foreach ($inject as list($type, $search, $replacement)) {
+        for (; isset($lines[$i]); $i++) {
+            if ($lines[$i] === $search) {
+                if ($type === 'insert_after') {
+                    array_splice($lines, $i+1, 0, $replacement);
+                } elseif ($type === 'replace') {
+                    $lines[$i] = $replacement;
+                }
+                break;
+            }
+        }
+    }
+}
+
+
 file_put_contents(
     'fmt.stub.php',
     implode("\n", $lines)
